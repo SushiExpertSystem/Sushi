@@ -47,8 +47,20 @@ unagi :- fish, verify(eel), verify(rice), verify(seaweed).
 katsuo :- fish, verify(tuna).
 salmon :- fish, verify(salmon).
 
-% calssification rules, Q to be asked COB
-veggie :- verify(meat), !.
+% classification rules, Q to be asked COB
+veggie :- verify(meat),
+verify(asparagus),
+verify(avocado),
+verify(bean_sprout),
+verify(carrots),
+verify(cream_cheese),
+verify(cucumber),
+verify(egg),
+verify(mayo),
+verify(scallion),
+verify(seaweed),
+verify(sesame_seeds),
+verify(spice),!.
 fish :- verify(tuna),
 	verify(crab),
 	verify(eel),
@@ -73,4 +85,4 @@ verify(S) :- (yes(S) -> true ; (no(S) -> fail ; ask(S))).
 % undo all yes/no's 
 undo :- retract(yes(_)),fail. 
 undo :- retract(no(_)),fail. 
-undo. 
+undo.
