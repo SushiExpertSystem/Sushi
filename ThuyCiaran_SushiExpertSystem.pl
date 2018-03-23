@@ -1,4 +1,5 @@
-% Ciaran OBrien
+% Thuy Nguyen - 757995
+% Ciaran OBrien - 757998
 go :- hypothesize(Sushi),
 	write('I think you should order '),
 	write(Sushi), nl, undo.
@@ -47,7 +48,7 @@ unagi :- fish, verify(eel), verify(rice), verify(seaweed).
 katsuo :- fish, verify(tuna).
 salmon :- fish, verify(salmon).
 
-% classification rules, Q to be asked COB
+% classification rules, Q to be asked
 veggie :- verify(meat),
 verify(asparagus),
 verify(avocado),
@@ -68,7 +69,7 @@ fish :- verify(tuna),
 	verify(shrimp),
 	verify(salmon),
 	!.
-meat :- !veggie.
+meat :- veggie.
 % how to ask questions
 ask(Question) :- 
         write('Would you eat '), 
