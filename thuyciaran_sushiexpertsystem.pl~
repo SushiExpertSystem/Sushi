@@ -46,39 +46,38 @@ salmon :- fish, verify(salmon).
 
 % classification rules, Q to be asked
 veggie :- verify(asparagus),
-        verify(avocado),
-        verify(bean_sprout),
-        verify(carrots),
-        verify(cream_cheese),
-        verify(cucumber),
-        verify(egg),
-        verify(mayo),
-        verify(scallion),
-        verify(seaweed),
-        verify(sesame_seeds),
-        verify(spice),
-        !.
+verify(avocado),
+verify(bean_sprout),
+verify(carrots),
+verify(cream_cheese),
+verify(cucumber),
+verify(egg),
+verify(mayo),
+verify(scallion),
+verify(seaweed),
+verify(sesame_seeds),
+verify(spice),!.
 fish :- verify(tuna),
-        verify(crab),
-        verify(eel),
-        verify(crab),
-        verify(shrimp),
-        verify(salmon),
-        !.
+verify(crab),
+verify(eel),
+verify(crab),
+verify(shrimp),
+verify(salmon),
+!.
 % how to ask questions
-ask(Question) :-
-        write('Would you eat '),
-        write(Question),
-        write('? '),
-        read(Response),
-        nl,
-         ( (Response == yes ; Response == y)
-         -> assert(yes(Question)) ;
-         assert(no(Question)), fail).
-:- dynamic yes/1,no/1.
-% how to verify
-verify(S) :- (yes(S) -> true ; (no(S) -> fail ; ask(S))).
-% undo all yes/no's
-undo :- retract(yes(_)),fail.
-undo :- retract(no(_)),fail.
+ask(Question) :- 
+        write('Would you eat '), 
+        write(Question), 
+        write('? '), 
+        read(Response), 
+        nl, 
+         ( (Response == yes ; Response == y) 
+         -> assert(yes(Question)) ; 
+         assert(no(Question)), fail). 
+:- dynamic yes/1,no/1. 
+% how to verify 
+verify(S) :- (yes(S) -> true ; (no(S) -> fail ; ask(S))). 
+% undo all yes/no's 
+undo :- retract(yes(_)),fail. 
+undo :- retract(no(_)),fail. 
 undo.
