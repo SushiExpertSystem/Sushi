@@ -26,45 +26,31 @@ hypothesize(salmon) :- salmon, !.
 hypothesize(unkown). % no diagnosis
 
 % sushi identification rules
-tiger_roll :- fish, verify(avocado), verify(cucumber), verify(tobiko), verify(rice), verify(seaweed).
-tamango :- veggie, verify(egg), verify(seaweed).
-maguro :- fish, verify(tuna), verify(rice).
-crunch_roll :- fish, verify(spice), verify(tuna), verify(tempura), verify(rice), verify(seaweed).
-dynamite_roll :- fish, verify(tempura), verify(bean_sprout), verify(carrots), verify(avocado), verify(cucumber), verify(spice), verify(mayo), verify(rice), verify(seaweed).
-california_roll :- fish, verify(crab), verify(avocado), verify(cucumber), verify(sesame_seeds), verify(rice), verify(seaweed).
-spicy_tuna_roll :- fish, verify(tuna), verify(mayo), verify(spice), verify(rice), verify(seaweed).
-spider_roll :- fish, verify(crab), verify(tempura), verify(cucumber), verify(avocado), verify(spice), verify(mayo), verify(rice), verify(seaweed).
-vegetable_roll :- veggie, verify(cucumber), verify(carrots), verify(scallion), verify(asparagus), verify(cream_cheese), verify(rice), verify(seaweed).
-shrimp_tempura_roll :- fish, verify(shrimp), verify(tempura), verify(avocado), verify(rice), verify(seaweed).
-surf_and_turf_roll :- fish, verify(crab), verify(cucumber), verify(avocado), verify(rice), verify(seaweed), verify(carrots), verify(tuna), verify(salmon).
-tempura_roll :- fish, verify(tempura), verify(rice), verify(seaweed).
-sake :- fish, verify(salmon), verify(rice).
-ebi :- fish, verify(prawn), verify(rice).
-unagi :- fish, verify(eel), verify(rice), verify(seaweed).
-katsuo :- fish, verify(tuna).
-salmon :- fish, verify(salmon).
+tiger_roll :- uramaki, verify(avocado), verify(cucumber), verify(tobiko), verify(rice), verify(seaweed).
+tamango :- nigiri, verify(egg), verify(seaweed).
+maguro :- nigiri, verify(tuna), verify(rice).
+crunch_roll :- uramaki, verify(spice), verify(tuna), verify(tempura), verify(rice), verify(seaweed).
+dynamite_roll :- uramaki, verify(tempura), verify(bean_sprout), verify(carrots), verify(avocado), verify(cucumber), verify(spice), verify(mayo), verify(rice), verify(seaweed).
+california_roll :- uramaki, maki, verify(crab), verify(avocado), verify(cucumber), verify(sesame_seeds), verify(rice), verify(seaweed).
+spicy_tuna_roll :- uramaki, maki, verify(tuna), verify(mayo), verify(spice), verify(rice), verify(seaweed).
+spider_roll :- uramaki, maki, verify(crab), verify(tempura), verify(cucumber), verify(avocado), verify(spice), verify(mayo), verify(rice), verify(seaweed).
+vegetable_roll :- uramaki, maki, verify(cucumber), verify(carrots), verify(scallion), verify(asparagus), verify(cream_cheese), verify(rice), verify(seaweed).
+shrimp_tempura_roll :- uramaki, maki, verify(shrimp), verify(tempura), verify(avocado), verify(rice), verify(seaweed).
+surf_and_turf_roll :- uramaki, verify(crab), verify(cucumber), verify(avocado), verify(rice), verify(seaweed), verify(carrots), verify(tuna), verify(salmon).
+tempura_roll :- uramaki, verify(tempura), verify(rice), verify(seaweed).
+sake :- nigiri, verify(salmon), verify(rice).
+ebi :- nigiri, verify(prawn), verify(rice).
+unagi :- nigiri, verify(eel), verify(rice), verify(seaweed).
+katsuo :- sashimi, verify(tuna).
+salmon :- sashimi, verify(salmon).
 
 % classification rules, Q to be asked
-veggie :- verify(asparagus),
-        verify(avocado),
-        verify(bean_sprout),
-        verify(carrots),
-        verify(cream_cheese),
-        verify(cucumber),
-        verify(egg),
-        verify(mayo),
-        verify(scallion),
-        verify(seaweed),
-        verify(sesame_seeds),
-        verify(spice),
-        !.
-fish :- verify(tuna),
-        verify(crab),
-        verify(eel),
-        verify(crab),
-        verify(shrimp),
-        verify(salmon),
-        !.
+maki :- verify(rice_wrapped_in_seaweed).
+nigiri :- verify(fish_on_rice).
+tamakai :- verify(seaweed_wrappped_in_a_cone).
+sashimi :- verify(fish_alone).
+uramaki :- verify(seaweed_wrapped_in_rice).
+
 % how to ask questions
 ask(Question) :-
         write('Would you eat '),
