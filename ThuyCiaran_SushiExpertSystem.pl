@@ -1,8 +1,17 @@
 % Thuy Nguyen - 757995
 % Ciaran OBrien - 757998
-go :- hypothesize(Sushi),
+go :- hypothesize(Sushi_1), % First Sushi recommendation
+	assert(savedSushiValue(Sushi_1)),
+	undo,
+	go2(Sushi_1).
+
+go2(Saved) :- hypothesize(Sushi_2), % Second Sushi recommendation
 	write('I think you should order '),
-	write(Sushi), nl, undo.
+	write(Saved), 
+	write(' and also '),
+	write(Sushi_2),
+	nl,undo.
+
 
 % hypothesize to be tested COB
 hypothesize(tiger_roll) :- tiger_roll, !.
@@ -65,6 +74,7 @@ ask(Question) :-
 % how to verify
 verify(S) :- (yes(S) -> true ; (no(S) -> fail ; ask(S))).
 % undo all yes/no's
+
 undo :- retract(yes(_)),fail.
 undo :- retract(no(_)),fail.
 undo.
