@@ -11,6 +11,7 @@ go2(Saved) :- hypothesize(Sushi_2), % Second Sushi recommendation
 	write(Saved),
 	write(' and also '),
 	write(Sushi_2),
+	goDrinking(),
 	nl,undo.
 
 
@@ -18,7 +19,6 @@ goDrinking :- hypothesizeDrink(Drink), % Drink recommendation
 	write('So you are having '),
 	((Drink == beer) -> pickBeer() ; write(Drink)),
 	undo.
-
 
 %random number random(x, n, z) -
 %will pick a number from range x - (n-1)
@@ -47,12 +47,15 @@ hypothesize(katsuo) :- katsuo, !.
 hypothesize(salmon) :- salmon, !.
 hypothesize(unkown). % no diagnosis
 
-
-hypothesizeDrink(beer) :- beer,!.
-hypothesizeDrink(sake_wine) :- sake_wine,!.
-hypothesizeDrink(red_wine) :- red_wine,!.
 hypothesizeDrink(white_wine) :- white_wine,!.
+hypothesizeDrink(red_wine) :- red_wine,!.
+hypothesizeDrink(rose) :- rose,!.
+hypothesizeDrink(sake_wine) :- sake_wine,!.
+hypothesizeDrink(beer) :- beer,!.
 hypothesizeDrink(unkown). % no diagnosis
+
+hypothesizeWine(riesling) :- riesling,!.
+hypothesizeWine(unkown).
 
 % sushi identification rules
 tiger_roll :- uramaki, verify(avocado), verify(cucumber), verify(tobiko), verify(rice), verify(seaweed).
@@ -73,6 +76,7 @@ unagi :- nigiri, verify(eel), verify(rice), verify(seaweed), assert(eel).
 katsuo :- sashimi, verify(tuna), assert(tuna).
 salmon :- sashimi, verify(salmon), assert(salmon).
 
+
 % classification rules, Q to be asked
 maki :- verify(rice_wrapped_in_seaweed).
 nigiri :- verify(fish_on_rice).
@@ -92,13 +96,13 @@ ginjo :- sake, tuna, salmon, eel, crab, prawn.
 junmai :- sake, tuna, salmon, eel, crab, prawn.
 
 % classification for the paring drinks
-beer :- drink, verify(beer).
-white_wine :- drink, verify(white_wine).
-red_wine :- drink, verify(red_wine).
-rose :- drink, verify(rose).
-sake_wine :- drink ,verify(sake).	
+white_wine :- drink, verify(white_wine),!.
+red_wine :- drink, verify(red_wine),!.
+rose :- drink, verify(rose),!.
+sake_wine :- drink ,verify(sake),!.	
+beer :- drink, verify(beer),!.
 
-drink :- verify(alcohol),!.
+drink :- verify(alcohol_with_your_meal),!.
 
 % how to ask questions
 ask(Question) :-
