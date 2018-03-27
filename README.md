@@ -39,11 +39,7 @@ ask(Question) :-
 :- dynamic yes/1,no/1.
 ```
 
-0, 10, Y picks a number from 0-9 and stores it in Y
-nth0 picks a number from the index 
-First paramenter in nth0 takes in a random number 
-Then uses that number to pick something from the list 
-Last parameter of nth0 stores the result 
+This function randomly picks a beer in the list and returns it. This function will be called when the user enters y. (yes) when asked if they want a drink. 
 ```
 pickBeer() :- random(0, 10, Y),
 			  nth0(Y,[koshihikari_echigo, shinshu_sansan, kirin, asahi , asahi_orion, sapporo_fuyumonogatari, beerlao, sapporo, siwo, zhujiang], X),
