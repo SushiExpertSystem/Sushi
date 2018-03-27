@@ -7,23 +7,11 @@ go :- hypothesize(Sushi_1), % First Sushi recommendation
 
 go2(Saved) :- hypothesize(Sushi_2), % Second Sushi recommendation
 	write('I think you should order '),
-	write(Saved),
+	write(Saved), 
 	write(' and also '),
 	write(Sushi_2),
 	nl,undo.
 
-
-goDrinking :- hypothesizeDrink(Drink), % Drink recommendation
-	write('So you are having '),
-	((Drink == beer) -> pickBeer() ; write(Drink)),
-	undo.
-
-
-%random number random(x, n, z) -
-%will pick a number from range x - (n-1)
-pickBeer() :- random(0, 10, Y),
-	nth0(Y,[koshihikari_echigo, shinshu_sansan, kirin, asahi , asahi_orion, sapporo_fuyumonogatari, beerlao, sapporo, siwo, zhujiang], X),
-	write(X).
 
 % hypothesize to be tested COB
 hypothesize(tiger_roll) :- tiger_roll, !.
@@ -45,13 +33,6 @@ hypothesize(katsuo) :- katsuo, !.
 hypothesize(katsuo) :- katsuo, !.
 hypothesize(salmon) :- salmon, !.
 hypothesize(unkown). % no diagnosis
-
-
-hypothesizeDrink(beer) :- beer,!.
-hypothesizeDrink(sake_wine) :- sake_wine,!.
-hypothesizeDrink(red_wine) :- red_wine,!.
-hypothesizeDrink(white_wine) :- white_wine,!.
-hypothesizeDrink(unkown). % no diagnosis
 
 % sushi identification rules
 tiger_roll :- uramaki, verify(avocado), verify(cucumber), verify(tobiko), verify(rice), verify(seaweed).
@@ -79,21 +60,9 @@ tamakai :- verify(seaweed_wrappped_in_a_cone).
 sashimi :- verify(fish_alone).
 uramaki :- verify(seaweed_wrapped_in_rice).
 
-% wine classification
-riesling :- white_wine, tiger_roll.
-
-% classification for the paring drinks
-beer :- drink, verify(beer).
-white_wine :- drink, verify(white_wine).
-red_wine :- drink, verify(red_wine).
-rose :- drink, verify(rose).
-sake_wine :- drink ,verify(sake).	
-
-drink :- verify(alcohol),!.
-
 % how to ask questions
 ask(Question) :-
-        write('Would you like '),
+        write('Would you eat '),
         write(Question),
         write('? '),
         read(Response),
@@ -101,7 +70,15 @@ ask(Question) :-
          ( (Response == yes ; Response == y)
          -> assert(yes(Question)) ;
          assert(no(Question)), fail).
-
+ask(AnotherQuestion):-
+	write('Would you eat '),
+    write(Question),
+    write('? '),
+    read(Response),
+    nl,
+     ( (Response == yes ; Response == y)
+     -> assert(yes(Question)) ;
+     assert(no(Question)), fail).
 :- dynamic yes/1,no/1.
 % how to verify
 verify(S) :- (yes(S) -> true ; (no(S) -> fail ; ask(S))).
