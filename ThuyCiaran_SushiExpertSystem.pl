@@ -58,6 +58,14 @@ hypothesizeDrink(beer) :- beer,!.
 hypothesizeDrink(unkown). % no diagnosis
 
 hypothesizeWine(riesling) :- riesling,!.
+hypothesizeWine(chardonnay) :- chardonnay,!.
+hypothesizeWine(dry_riesling) :- dry_riesling,!.
+hypothesizeWine(dry_champagne) :- dry_champagne,!.
+hypothesizeWine(pinot_noir) :- pinot_noir,!.
+hypothesizeWine(red_sancerre) :- red_sancerre,!.
+hypothesizeWine(dry_rose) :- dry_rose,!.
+hypothesizeWine(ginjo) :- ginjo,!.
+hypothesizeWine(junmai) :- junmai,!.
 hypothesizeWine(unkown).
 
 % sushi identification rules
