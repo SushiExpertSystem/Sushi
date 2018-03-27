@@ -1,5 +1,6 @@
 % Thuy Nguyen - 757995
 % Ciaran OBrien - 757998
+
 go :- hypothesize(Sushi_1), % First Sushi recommendation
 	assert(savedSushiValue(Sushi_1)),
 	undo,
@@ -73,7 +74,15 @@ sashimi :- verify(fish_alone).
 uramaki :- verify(seaweed_wrapped_in_rice).
 
 % wine classification
-riesling :- white_wine, tiger_roll.
+riesling :- white_wine, verify(tuna).
+chardonnay :- white_wine, verify(tuna).
+dry_riesling :- white_wine, verify(eel).
+dry_champagne :- whtie_wine, verify(tuna), verify(salmon), verify(eel), verify(crab), verify(prawn).
+pinot_noir :- red_wine, verify(salmon).
+red_sancerre :- red_wine, maki.
+dry_rose :- rose, verify(salmon).
+ginjo :- sake, verify(tuna), verify(salmon), verify(eel), verify(crab), verify(prawn).
+junmai :- sake, verify(tuna), verify(salmon), verify(eel), verify(crab), verify(prawn).
 
 % classification for the paring drinks
 beer :- drink, verify(beer).
