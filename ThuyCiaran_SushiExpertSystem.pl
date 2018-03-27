@@ -11,6 +11,7 @@ go2(Saved) :- hypothesize(Sushi_2), % Second Sushi recommendation
 	write(Saved),
 	write(' and also '),
 	write(Sushi_2),
+	goDrinking(),
 	nl,undo.
 
 
@@ -19,6 +20,11 @@ goDrinking :- hypothesizeDrink(Drink), % Drink recommendation
 	((Drink == beer) -> pickBeer() ; write(Drink)),
 	undo.
 
+%random number random(x, n, z) -
+%will pick a number from range x - (n-1)
+pickBeer() :- random(0, 10, Y),
+	nth0(Y,[koshihikari_echigo, shinshu_sansan, kirin, asahi , asahi_orion, sapporo_fuyumonogatari, beerlao, sapporo, siwo, zhujiang], X),
+	write(X).
 
 % hypothesize to be tested COB
 hypothesize(tiger_roll) :- tiger_roll, !.
@@ -45,26 +51,34 @@ hypothesizeDrink(beer) :- beer,!.
 hypothesizeDrink(sake_wine) :- sake_wine,!.
 hypothesizeDrink(red_wine) :- red_wine,!.
 hypothesizeDrink(white_wine) :- white_wine,!.
+hypothesizeDrink(red_wine) :- red_wine,!.
+hypothesizeDrink(rose) :- rose,!.
+hypothesizeDrink(sake_wine) :- sake_wine,!.
+hypothesizeDrink(beer) :- beer,!.
 hypothesizeDrink(unkown). % no diagnosis
+
+hypothesizeWine(riesling) :- riesling,!.
+hypothesizeWine(unkown).
 
 % sushi identification rules
 tiger_roll :- uramaki, verify(avocado), verify(cucumber), verify(tobiko), verify(rice), verify(seaweed).
 tamango :- nigiri, verify(egg), verify(seaweed).
-maguro :- nigiri, verify(tuna), verify(rice).
-crunch_roll :- uramaki, verify(spice), verify(tuna), verify(tempura), verify(rice), verify(seaweed).
+maguro :- nigiri, verify(tuna), verify(rice), assert(tuna).
+crunch_roll :- uramaki, verify(spice), verify(tuna), verify(tempura), verify(rice), verify(seaweed), assert(tuna).
 dynamite_roll :- uramaki, verify(tempura), verify(bean_sprout), verify(carrots), verify(avocado), verify(cucumber), verify(spice), verify(mayo), verify(rice), verify(seaweed).
-california_roll :- uramaki, maki, verify(crab), verify(avocado), verify(cucumber), verify(sesame_seeds), verify(rice), verify(seaweed).
-spicy_tuna_roll :- uramaki, maki, verify(tuna), verify(mayo), verify(spice), verify(rice), verify(seaweed).
-spider_roll :- uramaki, maki, verify(crab), verify(tempura), verify(cucumber), verify(avocado), verify(spice), verify(mayo), verify(rice), verify(seaweed).
+california_roll :- uramaki, maki, verify(crab), verify(avocado), verify(cucumber), verify(sesame_seeds), verify(rice), verify(seaweed), assert(crab).
+spicy_tuna_roll :- uramaki, maki, verify(tuna), verify(mayo), verify(spice), verify(rice), verify(seaweed), assert(tuna).
+spider_roll :- uramaki, maki, verify(crab), verify(tempura), verify(cucumber), verify(avocado), verify(spice), verify(mayo), verify(rice), verify(seaweed), assert(crab).
 vegetable_roll :- uramaki, maki, verify(cucumber), verify(carrots), verify(scallion), verify(asparagus), verify(cream_cheese), verify(rice), verify(seaweed).
-shrimp_tempura_roll :- uramaki, maki, verify(shrimp), verify(tempura), verify(avocado), verify(rice), verify(seaweed).
-surf_and_turf_roll :- uramaki, verify(crab), verify(cucumber), verify(avocado), verify(rice), verify(seaweed), verify(carrots), verify(tuna), verify(salmon).
+shrimp_tempura_roll :- uramaki, maki, verify(shrimp), verify(tempura), verify(avocado), verify(rice), verify(seaweed), assert(shrimp).
+surf_and_turf_roll :- uramaki, verify(crab), verify(cucumber), verify(avocado), verify(rice), verify(seaweed), verify(carrots), verify(tuna), verify(salmon), assert(tuna), assert(salmon), assert(crab).
 tempura_roll :- uramaki, verify(tempura), verify(rice), verify(seaweed).
-sake :- nigiri, verify(salmon), verify(rice).
-ebi :- nigiri, verify(prawn), verify(rice).
-unagi :- nigiri, verify(eel), verify(rice), verify(seaweed).
-katsuo :- sashimi, verify(tuna).
-salmon :- sashimi, verify(salmon).
+sake :- nigiri, verify(salmon), verify(rice), assert(salmon).
+ebi :- nigiri, verify(prawn), verify(rice), assert(prawn).
+unagi :- nigiri, verify(eel), verify(rice), verify(seaweed), assert(eel).
+katsuo :- sashimi, verify(tuna), assert(tuna).
+salmon :- sashimi, verify(salmon), assert(salmon).
+
 
 % classification rules, Q to be asked
 maki :- verify(rice_wrapped_in_seaweed).
@@ -74,24 +88,24 @@ sashimi :- verify(fish_alone).
 uramaki :- verify(seaweed_wrapped_in_rice).
 
 % wine classification
-riesling :- white_wine, verify(tuna).
-chardonnay :- white_wine, verify(tuna).
-dry_riesling :- white_wine, verify(eel).
-dry_champagne :- whtie_wine, verify(tuna), verify(salmon), verify(eel), verify(crab), verify(prawn).
-pinot_noir :- red_wine, verify(salmon).
+riesling :- white_wine, tuna.
+chardonnay :- white_wine, tuna.
+dry_riesling :- white_wine, eel.
+dry_champagne :- whtie_wine, tuna, salmon, eel, crab, prawn.
+pinot_noir :- red_wine, salmon.
 red_sancerre :- red_wine, maki.
-dry_rose :- rose, verify(salmon).
-ginjo :- sake, verify(tuna), verify(salmon), verify(eel), verify(crab), verify(prawn).
-junmai :- sake, verify(tuna), verify(salmon), verify(eel), verify(crab), verify(prawn).
+dry_rose :- rose, salmon.
+ginjo :- sake, tuna, salmon, eel, crab, prawn.
+junmai :- sake, tuna, salmon, eel, crab, prawn.
 
 % classification for the paring drinks
-beer :- drink, verify(beer).
-white_wine :- drink, verify(white_wine).
-red_wine :- drink, verify(red_wine).
-rose :- drink, verify(rose).
-sake_wine :- drink ,verify(sake).	
+white_wine :- drink, verify(white_wine),!.
+red_wine :- drink, verify(red_wine),!.
+rose :- drink, verify(rose),!.
+sake_wine :- drink ,verify(sake),!.	
+beer :- drink, verify(beer),!.
 
-drink :- verify(alcohol),!.
+drink :- verify(alcohol_with_your_meal),!.
 
 % how to ask questions
 ask(Question) :-
