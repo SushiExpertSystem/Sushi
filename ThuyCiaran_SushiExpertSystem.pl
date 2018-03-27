@@ -19,12 +19,6 @@ goDrinking :- hypothesizeDrink(Drink), % Drink recommendation
 	undo.
 
 
-%random number random(x, n, z) -
-%will pick a number from range x - (n-1)
-pickBeer() :- random(0, 10, Y),
-	nth0(Y,[koshihikari_echigo, shinshu_sansan, kirin, asahi , asahi_orion, sapporo_fuyumonogatari, beerlao, sapporo, siwo, zhujiang], X),
-	write(X).
-
 % hypothesize to be tested COB
 hypothesize(tiger_roll) :- tiger_roll, !.
 hypothesize(crunch_roll) :- crunch_roll, !.
@@ -45,7 +39,6 @@ hypothesize(katsuo) :- katsuo, !.
 hypothesize(katsuo) :- katsuo, !.
 hypothesize(salmon) :- salmon, !.
 hypothesize(unkown). % no diagnosis
-
 
 hypothesizeDrink(beer) :- beer,!.
 hypothesizeDrink(sake_wine) :- sake_wine,!.
