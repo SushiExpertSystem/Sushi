@@ -39,6 +39,17 @@ ask(Question) :-
 :- dynamic yes/1,no/1.
 ```
 
+This functions recommends you a drink that will go with your meal. It will first ask if the user would like a drink. The user is then able to enter y. (yes) or n. (no). It will also ask if the user would prefer an alcohol beverage. Again the user is able to respond with a y. or n. If no alcohol is paired with the meal, then the system will recommend the user to order water.
+```
+goDrinking :- hypothesizeDrink(Drink), % Drink recommendation
+	((Drink == beer) -> write(' your paired beer is '),pickBeer() ; undo),
+	((Drink == red_wine) -> hypothesizeWine(Wine),write(' your paired red wine is '), write(Wine); undo),
+	((Drink == white_wine) -> hypothesizeWine(Wine),write(' your paired white wine is '), write(Wine); undo),
+	((Drink == rose) -> hypothesizeWine(Wine),write(' your paired rose wine is '), write(Wine); undo),
+	((Drink == sake_wine) -> hypothesizeWine(Wine),write(' your paired sake is '), write(Wine); undo),
+	((Drink == water) -> write('Stick with water'); undo).
+```
+
 This function randomly picks a beer in the list and returns it. This function will be called when the user enters y. (yes) when asked if they want a drink. 
 ```
 pickBeer() :- random(0, 10, Y),
