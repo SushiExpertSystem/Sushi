@@ -56,3 +56,13 @@ pickBeer() :- random(0, 10, Y),
 			  nth0(Y,[koshihikari_echigo, shinshu_sansan, kirin, asahi , asahi_orion, sapporo_fuyumonogatari, beerlao, sapporo, siwo, zhujiang], X),
 		      write(X).                      
 ```
+
+
+## Picture form of expert system
+
+![Imgur](https://i.imgur.com/oO3OKYb.jpg)
+
+
+## Sample Interaction of the system
+
+![Imgur](https://i.imgur.com/FViSiBu.jpg)
